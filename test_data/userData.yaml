@@ -1,0 +1,4 @@
+-
+  path: '/api/user/userInfo'
+  headers:
+    cookie:

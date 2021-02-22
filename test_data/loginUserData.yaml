@@ -1,0 +1,15 @@
+-
+  path: '/api/login'
+  user:
+    username: philipsadmin@abc.com
+    password: 'Aa123456789&'
+  status: success
+
+
+-
+  path: '/api/login'
+  user:
+    username: philipsadmin@abc.com
+    password: 'Aa123456789@'
+  status: failed
+

@@ -1,0 +1,6 @@
+-
+  path: '/api/user/userInfo/'
+  headers:
+    cookie:
+  data:
+    userId: '2'
