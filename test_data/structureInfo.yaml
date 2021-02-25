@@ -1,0 +1,6 @@
+-
+  path: '/api/project/structureInfo?projectId='
+  headers:
+    cookie:
+  data:
+    projectId: '12'

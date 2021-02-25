@@ -3,6 +3,7 @@
 # @Time: 2021/2/22 上午11:39
 # @File: test_philipsAdmin.py.py
 
+import pytest
 import unittest
 import requests
 from ddt import ddt, file_data
@@ -13,8 +14,7 @@ import time
 import HTMLTestRunner
 
 @ddt
-class TestCase(unittest.TestCase):
-
+class Demo(unittest.TestCase):
     def assignment(self,kwargs):
         for key,value in kwargs.items():
             # 基于数据内容的格式来进行判断该用何种处理方式
@@ -64,12 +64,13 @@ class TestCase(unittest.TestCase):
         if sub2:
             cookie=sub1 + sub2 + sub3 + sub4
             self.log.info('cookie的内容{}'.format(cookie))
-            TestCase.cookie=cookie
+            Demo.cookie=cookie
         self.log.info('response {}'.format(response.text))
 
     # 获取所有用户信息
+    @unittest.skip('skip')
     @file_data('../test_data/userData.yaml')
-    def test_02(self,path,headers):
+    def test_02_getUserListInfo(self,path,headers):
         self.log.info('--------------------')
         self.log.info('test_02: get user list')
         url_getAllUser = self.url+path
@@ -85,7 +86,8 @@ class TestCase(unittest.TestCase):
 
     # 获取单个用户信息
     @file_data('../test_data/singleUserInfo.yaml')
-    def test_03(self,path,headers,data):
+    @unittest.skip('skip')
+    def test_03_getSingleUserInfo(self,path,headers,data):
         self.log.info('--------------------')
         self.log.info('test_03: test get single user info')
         url_singleUser = self.url+path+data['userId']
@@ -99,7 +101,8 @@ class TestCase(unittest.TestCase):
 
     # 获取项目列表
     @file_data('../test_data/projectListInfo.yaml')
-    def test_04(self,path,headers):
+    @unittest.skip('skip')
+    def test_04_getProjectListInfo(self,path,headers):
         self.log.info('--------------------')
         self.log.info('test_04: test get project list')
         url_getProjectList = self.url+path
@@ -113,7 +116,8 @@ class TestCase(unittest.TestCase):
 
     # 获取单个项目信息
     @file_data('../test_data/singleProjectInfo.yaml')
-    def test_05(self,path,headers,data):
+    @unittest.skip('skip')
+    def test_05_getSingleProjectInfo(self,path,headers,data):
         self.log.info('--------------------')
         self.log.info('test_05: test get single project info')
         url_getSingleProjectInfo=self.url + path+data['projectId']
@@ -127,7 +131,8 @@ class TestCase(unittest.TestCase):
 
     # 同样获取单个项目，使用assignment方法做
     @file_data('../test_data/singleProjectInfo.yaml')
-    def test_06(self, path, **kwargs):
+    @unittest.skip('skip')
+    def test_06_getSingleProjectInfo(self, path, **kwargs):
         self.log.info('--------------------')
         self.log.info('test_06: test get single project info with assignment function')
         value=self.assignment(kwargs)
@@ -140,10 +145,28 @@ class TestCase(unittest.TestCase):
         self.assertEqual(status, 'success', msg='test pass')
         self.log.info('response {}'.format(response.text))
 
-if __name__ == '__main__':
-    # unittest.main()
+    @file_data('../test_data/structureInfo.yaml')
+    def test_07_structureInfo(self,path,**kwargs):
+        value = self.assignment(kwargs)
+        url_getStructureInfo = self.url + path + value['data']['projectId']
+        response = self.ak.do_get(url=url_getStructureInfo,headers=value['headers'])
+        status = self.ak.get_text(response.text,'status')
+        self.assertEqual(status,'success',msg='test pass')
 
-    current_time = time.strftime('%Y-%m-%d %H:%M:%S',time.localtime())
+
+
+
+if __name__ == '__main__':
+    unittest.main()
+    # suite = unittest.TestSuite()
+    # suite.addTest(TestCase('test_01'))
+    # runner = unittest.TextTestRunner()
+    # runner.run(suite)
+
+
+
+'''
+current_time = time.strftime('%Y-%m-%d %H:%M:%S',time.localtime())
     print(current_time)
     testunit = unittest.makeSuite(TestCase)
     # testunit.addTest('test_01')
@@ -155,4 +178,6 @@ if __name__ == '__main__':
     runner = HTMLTestRunner.HTMLTestRunner(stream=fp,title='unittest report for'+report_name,description='description')
     runner.run(testunit)
     fp.close()
+'''
+
 
