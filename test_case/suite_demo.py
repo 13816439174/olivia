@@ -12,11 +12,16 @@ from test_case.test_philipsAdmin import Demo
 # 添加用例到套件执行
 # 创建套件
 suite = unittest.TestSuite()
+
+name = unittest.TestLoader().getTestCaseNames(Demo)
+print(name)
+
 # 添加用例到套件中: 添加单个测试用例
-suite.addTest(Demo('test_01'))
+suite.addTest(Demo(name[0]))
 # suite.addTest(Demo('test_2'))
 
 # 运行套件，一定要通过运行器来进行操作，默认到是TextTestRunner()
 runner = unittest.TextTestRunner()
 runner.run(suite)
-# test_02_getUserListInfo
+
+

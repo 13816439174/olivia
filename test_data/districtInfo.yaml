@@ -1,0 +1,6 @@
+-
+  path: '/api/project/districtInfo?projectId='
+  headers:
+    cookie:
+  data:
+    projectId: '12'

@@ -149,24 +149,58 @@ class Demo(unittest.TestCase):
     def test_07_structureInfo(self,path,**kwargs):
         value = self.assignment(kwargs)
         url_getStructureInfo = self.url + path + value['data']['projectId']
+        self.log.info('访问URL{}'.format(url_getStructureInfo))
         response = self.ak.do_get(url=url_getStructureInfo,headers=value['headers'])
         status = self.ak.get_text(response.text,'status')
         self.assertEqual(status,'success',msg='test pass')
+        self.log.info('response {}'.format(response.text))
+
+    @file_data('../test_data/districtInfo.yaml')
+    def test_08_distrctInfo(self,path,**kwargs):
+        value = self.assignment(kwargs)
+        url_getDistrictInfo = self.url + path + value['data']['projectId']
+        self.log.info('访问URL{}'.format(url_getDistrictInfo))
+        response = self.ak.do_get(url=url_getDistrictInfo,headers=value['headers'])
+        status=self.ak.get_text(response.text, 'status')
+        self.assertEqual(status, 'success', msg='test pass')
+        self.log.info('response {}'.format(response.text))
+
 
 
 
 
 if __name__ == '__main__':
-    unittest.main()
-    # suite = unittest.TestSuite()
-    # suite.addTest(TestCase('test_01'))
-    # runner = unittest.TextTestRunner()
+    # unittest.main()
+
+    suite=unittest.TestSuite()
+    # 使用了ddt的测试用例，名字已经变了，需要先获取测试用例的名字，再添加测试用例
+    name=unittest.TestLoader().getTestCaseNames(Demo)
+    print(name,len(name))
+    # 1. 添加用例到套件中: 添加单个测试用例
+    # suite.addTest(Demo(name[0]))
+    # suite.addTest(Demo(name[6]))
+
+    # 2. 批量添加测试用例到套件
+    cases = [Demo(name[0]), Demo(name[8])]
+    suite.addTests(cases)
+    runner=unittest.TextTestRunner()
+    runner.run(suite)
+
+    # 3. 批量添加测试用例到套件：通过TestCase对象，直接添加一整个UnitTest类
+    # suite.addTests(unittest.TestLoader().loadTestsFromTestCase(Demo))
+    # runner=unittest.TextTestRunner()
+    # runner.run(suite)
+
+    # 4. 批量添加：通过类名进行添加
+    # suite.addTests(unittest.TestLoader().loadTestsFromName('test_philipsAdmin.Demo'))
+    # runner=unittest.TextTestRunner()
     # runner.run(suite)
 
 
 
 '''
-current_time = time.strftime('%Y-%m-%d %H:%M:%S',time.localtime())
+    # unittest 测试报告
+    current_time = time.strftime('%Y-%m-%d %H:%M:%S',time.localtime())
     print(current_time)
     testunit = unittest.makeSuite(TestCase)
     # testunit.addTest('test_01')
