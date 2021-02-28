@@ -39,6 +39,7 @@ class Demo(unittest.TestCase):
         cls.url = ReadIni('TEST_SERVER','url') #从config.ini文件中读取url
         # cls.userId = '2'
         # cls.projectid = '12'
+        cls.timestamp=ApiKey().get_current_timestamp()
 
     # 登录
     @file_data('../test_data/loginUserData.yaml')
@@ -165,6 +166,11 @@ class Demo(unittest.TestCase):
         self.assertEqual(status, 'success', msg='test pass')
         self.log.info('response {}'.format(response.text))
 
+    @file_data('../test_data/createUserInfo.yaml')
+    def test_09_createUser(self,path,**kwargs):
+        self.timestamp
+        value=self.assignment(kwargs)
+
 
 
 
@@ -195,6 +201,16 @@ if __name__ == '__main__':
     # suite.addTests(unittest.TestLoader().loadTestsFromName('test_philipsAdmin.Demo'))
     # runner=unittest.TextTestRunner()
     # runner.run(suite)
+
+    # 5. 批量添加，：通过文件名来进行添加
+    # 定义获取用例的路径
+    # case_dir = './'
+    # 基于路径来添加用例，组成测试套件
+    # discover =unittest.defaultTestLoader.discover(start_dir=case_dir,pattern='test*.py')
+    # runner = unittest.TextTestRunner()
+    # runner.run(discover)
+
+
 
 
 

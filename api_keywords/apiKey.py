@@ -7,6 +7,7 @@ import requests
 import json
 import jsonpath
 import configparser
+import time
 
 
 # 这是接口的关键字驱动类，用于实现基本的接口测试业务关键字封装
@@ -65,3 +66,10 @@ class ApiKey:
                 return e
         else:
             return None
+
+    def get_current_timestamp(self):
+        # current_time=time.strftime('%Y-%m-%d %H:%M:%S', time.localtime())
+        # print(current_time)
+        current_timestamp = int(time.time())
+        # print(int(current_timestamp))
+        return current_timestamp

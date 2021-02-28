@@ -5,9 +5,12 @@
 
 import unittest
 import HTMLTestRunner
+# HTMLTestRunner 不能通过pip install安装，需要下载py文件，复制到python的lib路径下，通过导包来执行
 import time
 # 找到测试用例 defaultTestLoader加载用例 找discover（目录.用例文件)
 discover = unittest.defaultTestLoader.discover('./test_case','test_philipsAdmin.py')
+# 实际测试过程中，使用discover1 这种方式加载用例
+# discover1 = unittest.defaultTestLoader.discover(start_dir='./test_case',pattern='test*.py')
 
 current_time = time.strftime('%Y-%m-%d %H:%M:%S',time.localtime())
 report_path = './test_report/'
